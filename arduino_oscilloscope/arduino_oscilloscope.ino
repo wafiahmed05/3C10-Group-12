@@ -8,7 +8,7 @@
 // Declaration for SSD1306 display connected using software SPI (default case):
 #define OLED_COPI 11  // Data input from Arduino to Display.
 #define OLED_CLK 13   // Serial Clock input to Display.
-#define OLED_DC 9     // Data/Command: 0 = Command, 1 = Data.
+#define OLED_DC 9     // Data / Command: 0 = Command, 1 = Data.
 #define OLED_CS 10    // Chip select: 0 = Display selected, 1 = Display ignored.
 #define OLED_RESET 8  // Reset: Resets when pulled low. Keep high during normal operation.
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
