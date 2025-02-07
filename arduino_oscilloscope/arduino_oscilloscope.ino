@@ -3,16 +3,21 @@
 #include <Adafruit_SSD1306.h>
 
 #define SCREEN_WIDTH 128  // OLED display width, in pixels.
-#define SCREEN_HEIGHT 32  // OLED display height, in pixels.
+#define SCREEN_HEIGHT 64  // OLED display height, in pixels.
 
-// Declaration for SSD1306 display connected using software SPI (default case):
+// Declaration for SSD1306 display connected using hardware SPI:
 #define OLED_COPI 11  // Data input from Arduino to Display.
 #define OLED_CLK 13   // Serial Clock input to Display.
 #define OLED_DC 9     // Data / Command: 0 = Command, 1 = Data.
 #define OLED_CS 10    // Chip select: 0 = Display selected, 1 = Display ignored.
 #define OLED_RESET 8  // Reset: Resets when pulled low. Keep high during normal operation.
+
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
-                         OLED_COPI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+                         &SPI, OLED_DC, OLED_RESET, OLED_CS);
+// Comment out above and uncomment below to use software SPI.
+// Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT,
+//  OLED_COPI, OLED_CLK, OLED_DC, OLED_RESET, OLED_CS);
+
 #define ANALOG_INPUT A0    // SINE WAVE INPUT FROM OP-AMP
 #define TRIGGER_LEVEL 512  // TO CENTER THE SINE WAVE
 
@@ -49,12 +54,12 @@ void loop() {
     prevValue = currentValue;
   }
   // Plot waveform after trigger point
-  int graphHeight = SCREEN_HEIGHT - 10; 
+  int graphHeight = SCREEN_HEIGHT - 10;
   int lastX = 0;
   int lastY = map(currentValue, 0, 1023, graphHeight, 0);
   for (int x = 1; x < SCREEN_WIDTH; x++) {
     int value = analogRead(ANALOG_INPUT);
-    int y = map(value, 0, 1023, graphHeight, 0); // maps 'value' from [0, 1023] to [22, 0]
+    int y = map(value, 0, 1023, graphHeight, 0);          // maps 'value' from [0, 1023] to [54, 0]
     display.drawLine(lastX, lastY, x, y, SSD1306_WHITE);  // Connect points smoothly
     lastX = x;
     lastY = y;
